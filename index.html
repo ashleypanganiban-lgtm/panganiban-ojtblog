@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OJT Blog - DepEd Sorsogon City</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #F9F7F7;
+        }
+        .week-card {
+            background: white;
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid #3F72AF;
+        }
+        .week-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(63, 114, 175, 0.15);
+        }
+        .week-header {
+            background: linear-gradient(135deg, #3F72AF 0%, #112D4E 100%);
+            color: white;
+        }
+        .nav-link {
+            color: #112D4E;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #3F72AF;
+            text-decoration: underline;
+        }
+        .section-title {
+            color: #112D4E;
+        }
+        .sky-gradient {
+            background: linear-gradient(180deg, #DBE2EF 0%, #F9F7F7 100%);
+        }
+        .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Changed from 3 to 2 */
+    gap: 15px;
+}
+        @media (max-width: 768px) {
+            .photo-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        .photo-item {
+    width: 100%;
+    height: 220px; /* Increased from 180px */
+    object-fit: contain;
+    background-color: #F9F7F7;
+    border-radius: 8px;
+    padding: 4px;
+    transition: transform 0.3s ease;
+    border: 1px solid #DBE2EF;
+}
+        .photo-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .hero-bg {
+            background-image: linear-gradient(rgba(17, 45, 78, 0.7), rgba(17, 45, 78, 0.7)), 
+                              url('assets/img/ojtpics/main/me.webp');
+            background-size: cover;
+            background-position: center;
+        }
+        .profile-pic {
+            width: 180px;
+            height: 180px;
+            border: 4px solid white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            object-fit: cover;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+        }
+        .gallery-item {
+            width: 100%;
+            height: 250px;
+            object-fit: contain;
+            background-color: #F9F7F7;
+            border-radius: 8px;
+            padding: 5px;
+            transition: all 0.3s ease;
+            border: 1px solid #DBE2EF;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .photo-placeholder {
+            background: linear-gradient(135deg, #DBE2EF 0%, #F9F7F7 100%);
+            border: 2px dashed #3F72AF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            color: #3F72AF;
+            font-size: 14px;
+            text-align: center;
+            height: 100%;
+        }
+        
+        /* New class for full-size image view */
+        .full-size-container {
+            max-width: 800px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .full-size-image {
+            width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            background-color: #F9F7F7;
+            border-radius: 12px;
+            padding: 10px;
+        }
+        
+        /* Modal for viewing images */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        .modal-image {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Custom color classes */
+        .bg-primary-light {
+            background-color: #F9F7F7;
+        }
+        .bg-primary-medium {
+            background-color: #DBE2EF;
+        }
+        .bg-primary-accent {
+            background-color: #3F72AF;
+        }
+        .bg-primary-dark {
+            background-color: #112D4E;
+        }
+        .text-primary-light {
+            color: #F9F7F7;
+        }
+        .text-primary-medium {
+            color: #DBE2EF;
+        }
+        .text-primary-accent {
+            color: #3F72AF;
+        }
+        .text-primary-dark {
+            color: #112D4E;
+        }
+        .border-primary-medium {
+            border-color: #DBE2EF;
+        }
+        .border-primary-accent {
+            border-color: #3F72AF;
+        }
+    </style>
+</head>
+<body class="bg-primary-light">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#about" class="nav-link font-medium">About</a>
+                    <a href="#weeks" class="nav-link font-medium">Weekly Blog</a>
+                    <a href="#gallery" class="nav-link font-medium">Gallery</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-primary-accent hover:text-primary-dark">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-2 px-4 shadow-lg">
+            <a href="#about" class="block py-2 nav-link">About</a>
+            <a href="#weeks" class="block py-2 nav-link">Weekly Blog</a>
+            <a href="#gallery" class="block py-2 nav-link">Gallery</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Background Image -->
+    <section class="hero-bg py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/30"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="text-white">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6">
+                        My Internship Journey<br>
+                        <span class="text-primary-medium">at DepEd Sorsogon</span>
+                    </h1>
+                    <div class="flex items-center space-x-6 mb-8">
+                        <!-- Profile Picture -->
+                        <img src="assets/img/ojtpics/main/mepc.webp" 
+                             alt="Profile" 
+                             class="profile-pic rounded-full">
+                        <div>
+                            <p class="text-xl font-semibold">Ashley J. Panganibans</p>
+                            <p class="text-primary-medium">BSIT-4 Student</p>
+                            <p class="text-primary-medium">The Lewis College</p>
+                            <div class="flex items-center space-x-4 mt-3">
+                                <span class="bg-primary-accent/80 text-white px-3 py-1 rounded-lg text-sm">
+                                    <i class="fas fa-calendar-alt mr-1"></i> 12 Weeks
+                                </span>
+                               
+                            </div>
+                        </div>
+                    </div>
+               
+                </div>
+               
+            </div>
+        </div>
+    </section>
+
+   
+
+    <!-- Weekly Blog Section (Weeks 1-12) -->
+    <section id="weeks" class="py-16 bg-primary-medium">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-center text-primary-dark mb-12">Weekly OJT Journal</h2>
+            
+            <!-- Week 1 -->
+            <div class="week-card mb-8 shadow-lg">
+                <div class="week-header rounded-t-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full font-bold">
+                                Week 1
+                            </span>
+                        </div>
+                        <i class="fas fa-map-marker-alt text-white/80 text-xl"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="col-span-2">
+                            <div class="bg-primary-light p-6 rounded-lg border border-primary-medium">
+                                <h4 class="font-bold text-primary-dark mb-4 text-lg">Week 1 Experience</h4>
+                                <p class="text-primary-dark leading-relaxed">
+                                    On the first day of my internship journey, a mix of nervousness and genuine excitement washed over me as we walked through the halls of DepEd Sorsogon. We received a brief orientation regarding the rules and a walkthrough of the building from Ma'am Laarne, our OJT coordinator.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    Afterwards, we were assigned to our respective departments. We were divided into pairs, and I was partnered with Arjelone. Together, we were assigned to the Accounting Office. As we arrived, the office was very busy, but when Ma'am Laarne introduced us as the new OJTs, everyone greeted us with a warm welcome.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    Sir Paul Andy, the head of the department, welcomed us and gave a brief explanation of the workloads that would be assigned to us. His assistant, Sir Eiman, then showed us our workspace cubicle and introduced us to Ma'am Dothy, who instructed us on our very first task: encoding liquidation reports from different municipalities of Sorsogon.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    By the end of the day, we had accomplished 75 liquidation reports from Juban. The day was filled with introductions and new faces, and I realized that stepping out of the classroom and becoming an intern at DepEd Sorsogon allowed me to see how things truly work in the real world.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    On our second day, we attended the first mass of August. After that, we were assigned a new task: writing liquidation reports for the months of April to July. By the end of the day, I had completed 100 files. Although my hands felt numb from all the writing, the task was still enjoyable and manageable since it only required writing the school name and corresponding month.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    In the following days, our tasks remained the same—encoding and writing liquidation reports. Since our workspace had only one computer, Arjie and I scheduled our tasks accordingly. When I was encoding reports, Arjie focused on writing, and after lunch, we switched roles to balance the workload.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    As the first week came to an end, I realized how valuable the experience had become. The routine taught me patience and teamwork, while also giving me insight into real office dynamics—sharing responsibilities, adapting to limited resources, and supporting one another. Week one was both challenging and fulfilling, strengthening my excitement for the rest of my internship journey.
+                                </p>
+                                
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-primary-dark mb-4">Week 1 Photos</h4>
+                            <div class="photo-grid">
+                                <img src="assets/img/ojtpics/Week 1/1 (7).gif" 
+                                alt="Team Meeting" 
+                                class="photo-item">   
+                           <img src="assets/img/ojtpics/Week 1/1 (8).gif" 
+                                alt="Team Meeting" 
+                                class="photo-item">   
+                                <img src="assets/img/ojtpics/Week 1/1 (1).webp" 
+                                     alt="Orientation" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 1/1 (2).webp" 
+                                     alt="Department Tour" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 1/1 (3).webp" 
+                                     alt="First Day" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 1/1 (4).webp" 
+                                     alt="Office Setup" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 1/1 (5).webp" 
+                                     alt="Document Work" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 1/1 (6).webp" 
+                                     alt="Team Meeting" 
+                                     class="photo-item">
+                                   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 2 -->
+            <div class="week-card mb-8 shadow-lg">
+                <div class="week-header rounded-t-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full font-bold">
+                                Week 2
+                            </span>
+                        </div>
+                        <i class="fas fa-file-alt text-white/80 text-xl"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="col-span-2">
+                            <div class="bg-primary-light p-6 rounded-lg border border-primary-medium">
+                                <h4 class="font-bold text-primary-dark mb-4 text-lg">Week 2 Experience</h4>
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    As week two of my internship journey began, I felt more confident and comfortable in my role. 
+                                    The nervousness of the first few days had slowly faded, replaced with a growing sense of familiarity 
+                                    with the tasks and the people around me.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    The same tasks were given to us—either encoding or writing liquidation reports from different 
+                                    municipalities. Each day, we consistently accomplished one sack of files, which was equivalent 
+                                    to 100 reports.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    In the following days, the routine became smoother as I grew more accustomed to the workload. 
+                                    Although repetitive, the tasks taught me the importance of accuracy, consistency, and time management.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    By the end of the second week, I realized that internships are not only about learning technical 
+                                    skills but also about building discipline and resilience. The daily accomplishment of 100 files 
+                                    was proof of our dedication and effort. Week two gave me a deeper appreciation of the value of hard work, 
+                                    and it motivated me to look forward to the challenges and lessons that the coming weeks would bring.
+                                </p>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-primary-dark mb-4">Week 2 Photos</h4>
+                            <div class="photo-grid">
+                                <img src="assets/img/ojtpics/Week 2/2 (1).webp" 
+                                     alt="Document Preparation" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 2/2 (2).webp" 
+                                     alt="File Organization" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 2/2 (3).webp" 
+                                     alt="DTS Training" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 2/2 (4).webp" 
+                                     alt="Office Work" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 2/2 (5).webp" 
+                                     alt="Work Process" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 2/2 (6).webp" 
+                                     alt="Document Review" 
+                                     class="photo-item">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 3 -->
+            <div class="week-card mb-8 shadow-lg">
+                <div class="week-header rounded-t-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full font-bold">
+                                Week 3
+                            </span>
+                        </div>
+                        <i class="fas fa-video text-white/80 text-xl"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="col-span-2">
+                            <div class="bg-primary-light p-6 rounded-lg border border-primary-medium">
+                                <h4 class="font-bold text-primary-dark mb-4 text-lg">Week 3 Experience</h4>
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    As week three of my internship journey began, Ma'am Noreen gave us a new task: preparing the payroll 
+                                    for transportation and meal allowances of division test monitors, which had to be finished before the 
+                                    week of September. The real challenge began when Sir Carlo also gave us another set of liquidation 
+                                    reports that needed to be encoded. Since we only had one computer, Arjie and I decided to divide the 
+                                    work—while I focused on Ma'am Noreen’s task, she worked on Sir Carlo’s. After every twenty items 
+                                    we accomplished, we swapped tasks so that each of us could also work on the other assignment.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    At first, the task was difficult because I had to search for amounts across different files. However, 
+                                    as the days passed, I became familiar with the documents, and the process gradually became easier. 
+                                    By the end of the week, I managed to complete all the files assigned to me.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    Week three was a challenge. Balancing two major tasks with limited resources was not easy, but it 
+                                    taught me the importance of teamwork and resourcefulness. What seemed overwhelming at first became 
+                                    manageable through practice and cooperation. Completing all the files within the week gave me a sense 
+                                    of accomplishment and reminded me that challenges are opportunities to grow stronger and more capable.
+                                </p>
+                                
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-primary-dark mb-4">Week 3 Photos</h4>
+                            <div class="photo-grid">
+                                <img src="assets/img/ojtpics/Week 3/3 (7).gif" 
+                                alt="Team Discussion" 
+                                class="photo-item">
+                                <img src="assets/img/ojtpics/Week 3/3 (1).webp" 
+                                     alt="Live Streaming Setup" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 3/3 (2).webp" 
+                                     alt="OBS Software" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 3/3 (3).webp" 
+                                     alt="Technical Work" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 3/3 (4).webp" 
+                                     alt="Document Processing" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 3/3 (5).webp" 
+                                     alt="Work in Progress" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 3/3 (6).webp" 
+                                     alt="Team Discussion" 
+                                     class="photo-item">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 4 -->
+            <div class="week-card mb-8 shadow-lg">
+                <div class="week-header rounded-t-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full font-bold">
+                                Week 4
+                            </span>
+                        </div>
+                        <i class="fas fa-tools text-white/80 text-xl"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="col-span-2">
+                            <div class="bg-primary-light p-6 rounded-lg border border-primary-medium">
+                                <h4 class="font-bold text-primary-dark mb-4 text-lg">Week 4 Experience</h4>
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    As week four of my internship journey began, I was given a new task by Ma'am Mel, which involved 
+                                    working on the tracking slip and payroll salary. It was an easy task since I only needed to find 
+                                    and copy the check number from each slip, but I also had to be very careful in copying the numbers 
+                                    because they were important and needed to be accurate.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    In the following days, Sir Carlos assigned us the same type of work—encoding—but this time it was 
+                                    liquidation reports for the feeding program of different schools in the municipalities of Sorsogon. 
+                                    Despite the workload, we managed to complete every task given to us by the end of the week.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    Week four highlighted the importance of consistency and focus. Even though the tasks seemed repetitive, 
+                                    each report carried significance for the department’s operations. I learned that efficiency comes not 
+                                    only from speed but also from accuracy and attention to detail, and this realization strengthened my 
+                                    commitment to doing every task with care.
+                                </p>
+                                
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-primary-dark mb-4">Week 4 Photos</h4>
+                            <div class="photo-grid">
+                                <img src="assets/img/ojtpics/Week 4/4 (7).gif" 
+                                alt="OS Installation" 
+                                class="photo-item">
+                                <img src="assets/img/ojtpics/Week 4/4 (1).webp" 
+                                     alt="Hardware Repair" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 4/4 (2).webp" 
+                                     alt="Computer Assembly" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 4/4 (3).webp" 
+                                     alt="System Setup" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 4/4 (4).webp" 
+                                     alt="IT Work" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 4/4 (5).webp" 
+                                     alt="Technical Process" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 4/4 (6).webp" 
+                                     alt="OS Installation" 
+                                     class="photo-item">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 5 -->
+            <div class="week-card mb-8 shadow-lg">
+                <div class="week-header rounded-t-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full font-bold">
+                                Week 5
+                            </span>
+                        </div>
+                        <i class="fas fa-database text-white/80 text-xl"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="col-span-2">
+                            <div class="bg-primary-light p-6 rounded-lg border border-primary-medium">
+                                <h4 class="font-bold text-primary-dark mb-4 text-lg">Week 5 Experience</h4>
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    As week five of my internship journey began, it was already the month of September. We were so happy 
+                                    to receive a t-shirt from DepEd, which was given to us to be worn during the first mass of the month. 
+                                    Along with the mass, we also celebrated the opening ceremony of National Teachers’ Month. It was a new 
+                                    experience for me, and I was very glad to be able to attend such a meaningful event.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    In the following days, we were given the same tasks—encoding liquidation reports for Senior High per 
+                                    month and preparing reports for the feeding program. Despite the repetitive nature of the work, we 
+                                    consistently finished every task assigned to us.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    Week five was memorable not only because of the tasks we accomplished but also because of the experiences 
+                                    outside the office, such as attending the mass and the National Teachers’ Month ceremony. These moments 
+                                    reminded me that being part of DepEd is more than just paperwork—it is also about celebrating education 
+                                    and honoring the people who dedicate their lives to it.
+                                </p>
+                                
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-primary-dark mb-4">Week 5 Photos</h4>
+                            <div class="photo-grid">
+                                <img src="assets/img/ojtpics/Week 5/5 (7).gif" 
+                                alt="Quality Check" 
+                                class="photo-item">
+                                <img src="assets/img/ojtpics/Week 5/5 (1).webp" 
+                                     alt="Data Encoding" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 5/5 (2).webp" 
+                                     alt="Document Work" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 5/5 (3).webp" 
+                                     alt="Record Management" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 5/5 (4).webp" 
+                                     alt="Office Tasks" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 5/5 (5).webp" 
+                                     alt="Verification Process" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 5/5 (6).webp" 
+                                     alt="Quality Check" 
+                                     class="photo-item">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 6 -->
+            <div class="week-card mb-8 shadow-lg">
+                <div class="week-header rounded-t-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full font-bold">
+                                Week 6
+                            </span>
+                        </div>
+                        <i class="fas fa-laptop text-white/80 text-xl"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="col-span-2">
+                            <div class="bg-primary-light p-6 rounded-lg border border-primary-medium">
+                                <h4 class="font-bold text-primary-dark mb-4 text-lg">Week 6 Experience</h4>
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    A new chapter of my internship journey began in week six, bringing unexpected changes and adjustments. 
+                                    As the week started, some changes took place—unfortunately, Arjie and I were transferred to the Cash 
+                                    Department because new intern students from SSU had been assigned to the Accounting Office, and their 
+                                    courses were more aligned with that department. Ma'am Laarne decided to transfer us, and it was fine 
+                                    since the Cash Office did not have any interns at that time.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    On our first day there, it felt like the very first day of our internship again—full of introductions, 
+                                    new tasks, and skills we needed to learn. When we arrived at the Cash Office, Ma'am Rica, the head of 
+                                    the department, greeted us warmly and was very happy to have us there. Her kindness helped ease our 
+                                    nervousness. We greeted them back and introduced ourselves.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    As the days passed, we slowly learned how the Cash Office operates. Ma'am Amy was the one assigning 
+                                    us tasks and orienting us on what to do, such as assisting clients in finding their paychecks. Sir Raul 
+                                    guided us on where to locate payroll files for clients who were inquiring, while Sir Jeff and Ma'am Rica 
+                                    often asked us to deliver their paperwork or important files to other offices.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    Being transferred to a new department felt like starting over, but it gave me the chance to explore a 
+                                    different side of office work and gain new experiences. The smaller team environment allowed us to build 
+                                    closer connections with the staff, and their guidance helped us adjust quickly. This week reminded me that 
+                                    every change brings opportunities to grow, and I felt more confident knowing that I could handle new 
+                                    challenges with patience and determination.
+                                </p>
+                                
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-primary-dark mb-4">Week 6 Photos</h4>
+                            <div class="photo-grid">
+                                <img src="assets/img/ojtpics/Week 6/6 (1).webp" 
+                                     alt="System Upgrade" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 6/6 (2).webp" 
+                                     alt="Hardware Work" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 6/6 (3).webp" 
+                                     alt="Office Setup" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 6/6 (4).webp" 
+                                     alt="IT Support" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 6/6 (5).webp" 
+                                     alt="Team Collaboration" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 6/6 (6).webp" 
+                                     alt="Final Setup" 
+                                     class="photo-item">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 7 -->
+            <div class="week-card mb-8 shadow-lg">
+                <div class="week-header rounded-t-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full font-bold">
+                                Week 7
+                            </span>
+                        </div>
+                        <i class="fas fa-tasks text-white/80 text-xl"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="col-span-2">
+                            <div class="bg-primary-light p-6 rounded-lg border border-primary-medium">
+                                <h4 class="font-bold text-primary-dark mb-4 text-lg">Week 7 Experience</h4>
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    As week seven of my internship began, it's the opening of the BIDA ANG GURO Bazaar 2025 in celebration 
+                                    of Teachers’ Day. The bazaar showcased unique booths from 14 municipalities, each promoting their 
+                                    schools’ products. This turned out to be my busiest week so far.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    On the first day, I was assigned to prepare certificates for the winners of the best booths and for 
+                                    the pageant participants of the DepEd Mr. and Ms. Ambassadors. At the same time, I also sorted report 
+                                    files and receipts. The second day was filled with raffles and games, and I volunteered to assist the 
+                                    Supply Office in distributing prizes to raffle winners. On the final day of the bazaar, we prepared both 
+                                    certificates and prize money for the winners of the booth contest and the pageant.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    In the days that followed, I was tasked with writing the names of clients scheduled to receive their 
+                                    loan checks. The workload increased as many clients came to the office to claim their new pay slips 
+                                    for the month. During this time, Ma’am Amy taught me how to issue receipts for clients paying for the 
+                                    National Teachers’ Month Celebration – Gala Night.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    Although the week was packed with responsibilities, it was also one of the most rewarding experiences 
+                                    of my internship. Balancing event preparations with client services taught me the importance of staying 
+                                    organized under pressure. By the end of the week, I felt proud of my accomplishments and more confident 
+                                    in my ability to handle demanding situations.
+                                </p>
+                                
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-primary-dark mb-4">Week 7 Photos</h4>
+                            <div class="photo-grid">
+                                <img src="assets/img/ojtpics/Week 7/7 (8).gif" 
+                                alt="Field Work" 
+                                class="photo-item">
+                                <img src="assets/img/ojtpics/Week 7/7 (7).webp" 
+                                alt="Field Work" 
+                                class="photo-item">
+                                <img src="assets/img/ojtpics/Week 7/7 (1).webp" 
+                                     alt="Bazaar Setup" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 7/7 (2).webp" 
+                                     alt="Booth Evaluation" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 7/7 (3).webp" 
+                                     alt="Event Participation" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 7/7 (4).webp" 
+                                     alt="Document Work" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 7/7 (5).webp" 
+                                     alt="Office Tasks" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 7/7 (6).webp" 
+                                     alt="Field Work" 
+                                     class="photo-item">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 8 -->
+            <div class="week-card mb-8 shadow-lg">
+                <div class="week-header rounded-t-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full font-bold">
+                                Week 8
+                            </span>
+                        </div>
+                        <i class="fas fa-chalkboard-teacher text-white/80 text-xl"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="col-span-2">
+                            <div class="bg-primary-light p-6 rounded-lg border border-primary-medium">
+                                <h4 class="font-bold text-primary-dark mb-4 text-lg">Week 8 Experience</h4>
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    As week eight of my internship began, Ma’am Rica assigned us a new task: encoding the list of MOOE 
+                                    and PS monitoring reports for December 2024 and for January to November 2025. To manage the workload 
+                                    efficiently, Arjie and I created a schedule. In the mornings, I focused on encoding while she handled 
+                                    other responsibilities such as delivering files to the SDS office, sorting documents, and assisting clients. 
+                                    In the afternoons, we switched roles so that she could continue the encoding while I took care of the remaining tasks.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    In the following days, we maintained this arrangement while also assisting clients as usual. During 
+                                    this time, Ma’am Amy assigned me to issue receipts for clients paying for the Lihaktura event.
+                                </p>
+                                
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-primary-dark mb-4">Week 8 Photos</h4>
+                            <div class="photo-grid">
+                                <img src="assets/img/ojtpics/Week 8/8 (1).webp" 
+                                     alt="Teachers' Event" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 8/8 (2).webp" 
+                                     alt="Certificate Preparation" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 8/8 (3).webp" 
+                                     alt="Event Setup" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 8/8 (4).webp" 
+                                     alt="Office Activities" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 8/8 (5).webp" 
+                                     alt="Document Processing" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 8/8 (6).webp" 
+                                     alt="Event Process" 
+                                     class="photo-item">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 9 -->
+            <div class="week-card mb-8 shadow-lg">
+                <div class="week-header rounded-t-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full font-bold">
+                                Week 9
+                            </span>
+                        </div>
+                        <i class="fas fa-code text-white/80 text-xl"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="col-span-2">
+                            <div class="bg-primary-light p-6 rounded-lg border border-primary-medium">
+                                <h4 class="font-bold text-primary-dark mb-4 text-lg">Week 9 Experience</h4>
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    As week nine of my internship journey began, it was also a memorable experience as we joined the grand 
+                                    opening parade for the Kasanggayahan Festival 2025. After the parade, we returned to the office to 
+                                    continue the same tasks from week eight, which included encoding the MOOE and PS reports while assisting 
+                                    clients in claiming their trust or provident checks.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    In the following days, I did more file sorting and also learned something new—Sir Jeff taught me how 
+                                    to handle changes in signatories for some clients. This week was both memorable and productive.
+                                </p>
+                                
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-primary-dark mb-4">Week 9 Photos</h4>
+                            <div class="photo-grid">
+                                <img src="assets/img/ojtpics/Week 9/9 (7).gif" 
+                                alt="Development Process" 
+                                class="photo-item">
+                                <img src="assets/img/ojtpics/Week 9/9 (1).webp" 
+                                     alt="Coding Work" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 9/9 (2).webp" 
+                                     alt="App Development" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 9/9 (3).webp" 
+                                     alt="Software Testing" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 9/9 (4).webp" 
+                                     alt="Team Discussion" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 9/9 (5).webp" 
+                                     alt="Deployment Work" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 9/9 (6).webp" 
+                                     alt="Development Process" 
+                                     class="photo-item">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 10 -->
+            <div class="week-card mb-8 shadow-lg">
+                <div class="week-header rounded-t-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full font-bold">
+                                Week 10
+                            </span>
+                        </div>
+                        <i class="fas fa-parade text-white/80 text-xl"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="col-span-2">
+                            <div class="bg-primary-light p-6 rounded-lg border border-primary-medium">
+                                <h4 class="font-bold text-primary-dark mb-4 text-lg">Week 10 Experience</h4>
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    As week ten of my internship journey began, we continued with the same routine in week eight, focusing 
+                                    on encoding the MOOE and PS reports. Alongside this, I assisted clients and helped deliver reports to 
+                                    the SDS and COA offices.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    In the following days, Ma'am Rica assigned me to photocopy some reports and organize them properly. 
+                                    By the end of the week, we successfully accomplished the task of completing the MOOE and PS reports 
+                                    from 2024 to 2025.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    Finishing the reports felt rewarding.
+                                </p>
+                                
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-primary-dark mb-4">Week 10 Photos</h4>
+                            <div class="photo-grid">
+                                <img src="assets/img/ojtpics/Week 10/10 (1).webp" 
+                                     alt="Parade Participation" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 10/10 (2).webp" 
+                                     alt="Festival Event" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 10/10 (3).webp" 
+                                     alt="Community Activity" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 10/10 (4).webp" 
+                                     alt="Office Work" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 10/10 (5).webp" 
+                                     alt="Document Organization" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 10/10 (6).webp" 
+                                     alt="Parade Final" 
+                                     class="photo-item">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 11 -->
+            <div class="week-card mb-8 shadow-lg">
+                <div class="week-header rounded-t-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full font-bold">
+                                Week 11
+                            </span>
+                        </div>
+                        <i class="fas fa-cogs text-white/80 text-xl"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="col-span-2">
+                            <div class="bg-primary-light p-6 rounded-lg border border-primary-medium">
+                                <h4 class="font-bold text-primary-dark mb-4 text-lg">Week 11 Experience</h4>
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    As week eleven of my internship journey began, we spent the entire week assisting Sir Raul in arranging 
+                                    pay slips and payroll for both senior high school and junior high school teachers. In addition to this, 
+                                    I delivered reports to the SDO and Accounting offices and helped clients with their inquiries.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    Later in the week, Sir Raul assigned me the task of writing down the details of clients who were 
+                                    scheduled to receive their trust or provident slips.
+                                </p>
+                                
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-primary-dark mb-4">Week 11 Photos</h4>
+                            <div class="photo-grid">
+                                <img src="assets/img/ojtpics/Week 11/11 (1).webp" 
+                                     alt="Document Scanning" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 11/11 (2).webp" 
+                                     alt="Office Routine" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 11/11 (3).webp" 
+                                     alt="Coordination Work" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 11/11 (4).webp" 
+                                     alt="DTS Work" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 11/11 (5).webp" 
+                                     alt="Work Process" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 11/11 (6).webp" 
+                                     alt="Final Tasks" 
+                                     class="photo-item">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week 12 -->
+            <div class="week-card mb-8 shadow-lg">
+                <div class="week-header rounded-t-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <span class="bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full font-bold">
+                                Week 12
+                            </span>
+                        </div>
+                        <i class="fas fa-chart-line text-white/80 text-xl"></i>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="col-span-2">
+                            <div class="bg-primary-light p-6 rounded-lg border border-primary-medium">
+                                <h4 class="font-bold text-primary-dark mb-4 text-lg">Week 12 Experience</h4>
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    As my last week of internship began, we attended the mass for the Nazarene. After that, we continued 
+                                    with our usual routine of assisting clients in finding their pay slips, helping others with their 
+                                    trust or provident checks, and delivering reports to the SDO office.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed mb-4">
+                                    On the final day of my internship at the DepEd School Division Office, Sir Jomar, and Sir Lance who were 
+                                    our coordinators, prepared a small gathering where we shared meals and received our certificates for 
+                                    completing our OJT hours. We also had the chance to take photos with the division heads, making the 
+                                    moment even more special.
+                                </p>
+                                
+                                <p class="text-primary-dark leading-relaxed">
+                                    Completing my OJT at the DepEd School Division Office was a meaningful journey from start to finish. 
+                                    I am grateful for the guidance, lessons, and experiences that helped me grow in both skills and confidence, 
+                                    and I will carry these learnings with me into my future career.
+                                </p>
+                                
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-primary-dark mb-4">Week 12 Photos</h4>
+                            <div class="photo-grid">
+                                <img src="assets/img/ojtpics/Week 12/12 (1).webp" 
+                                     alt="System Optimization" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 12/12 (2).webp" 
+                                     alt="Final Tasks" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 12/12 (3).webp" 
+                                     alt="Project Completion" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 12/12 (4).webp" 
+                                     alt="Team Work" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 12/12 (5).webp" 
+                                     alt="Final Week" 
+                                     class="photo-item">
+                                <img src="assets/img/ojtpics/Week 12/12 (6).webp" 
+                                     alt="Optimization Work" 
+                                     class="photo-item">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <!-- Photo Collection Gallery -->
+<section id="gallery" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center text-primary-dark mb-12">OJT Photo Collection</h2>
+        <p class="text-center text-primary-accent mb-8">A collection of memorable moments from my 12-week internship</p>
+        
+        <div class="gallery-grid mb-12">
+            <img src="assets/img/gallery/1%20(1).gif" alt="OJT Day 1" class="gallery-item">
+            <img src="assets/img/gallery/1%20(1).webp" alt="OJT Day 1" class="gallery-item">
+            <img src="assets/img/gallery/1%20(2).webp" alt="OJT Day 2" class="gallery-item">
+            <img src="assets/img/gallery/1%20(3).webp" alt="OJT Day 3" class="gallery-item">
+            <img src="assets/img/gallery/1%20(4).webp" alt="OJT Day 4" class="gallery-item">
+            <img src="assets/img/gallery/1%20(5).webp" alt="OJT Day 5" class="gallery-item">
+            <img src="assets/img/gallery/1%20(6).webp" alt="OJT Day 6" class="gallery-item">
+            <img src="assets/img/gallery/1%20(7).webp" alt="OJT Day 7" class="gallery-item">
+            <img src="assets/img/gallery/1%20(8).webp" alt="OJT Day 8" class="gallery-item">
+            <img src="assets/img/gallery/1%20(9).webp" alt="OJT Day 9" class="gallery-item">
+            <img src="assets/img/gallery/1%20(10).webp" alt="OJT Day 10" class="gallery-item">
+            <img src="assets/img/gallery/1%20(11).webp" alt="OJT Day 11" class="gallery-item">
+            <img src="assets/img/gallery/1%20(12).webp" alt="OJT Day 12" class="gallery-item">
+            <img src="assets/img/gallery/1%20(13).webp" alt="OJT Day 13" class="gallery-item">
+            <img src="assets/img/gallery/1%20(14).webp" alt="OJT Day 14" class="gallery-item">
+            <img src="assets/img/gallery/1%20(15).webp" alt="OJT Day 15" class="gallery-item">
+            <img src="assets/img/gallery/1%20(16).webp" alt="OJT Day 16" class="gallery-item">
+            <img src="assets/img/gallery/1%20(17).webp" alt="OJT Day 17" class="gallery-item">
+            <img src="assets/img/gallery/1%20(18).webp" alt="OJT Day 18" class="gallery-item">
+            <img src="assets/img/gallery/1%20(19).webp" alt="OJT Day 19" class="gallery-item">
+            <img src="assets/img/gallery/1%20(20).webp" alt="OJT Day 20" class="gallery-item">
+            <img src="assets/img/gallery/1%20(21).webp" alt="OJT Day 21" class="gallery-item">
+            <img src="assets/img/gallery/1%20(22).webp" alt="OJT Day 22" class="gallery-item">
+            <img src="assets/img/gallery/1%20(23).webp" alt="OJT Day 23" class="gallery-item">
+            <img src="assets/img/gallery/1%20(24).webp" alt="OJT Day 24" class="gallery-item">
+            <img src="assets/img/gallery/1%20(25).webp" alt="OJT Day 25" class="gallery-item">
+            <img src="assets/img/gallery/1%20(26).webp" alt="OJT Day 26" class="gallery-item">
+            <img src="assets/img/gallery/1%20(27).webp" alt="OJT Day 27" class="gallery-item">
+            <img src="assets/img/gallery/1%20(28).webp" alt="OJT Day 28" class="gallery-item">
+            <img src="assets/img/gallery/1%20(29).webp" alt="OJT Day 29" class="gallery-item">
+        </div>
+        
+
+        <div class="bg-primary-light rounded-xl p-8 border border-primary-medium">
+            <h3 class="text-xl font-bold text-primary-dark mb-4">Troubleshooting Guide</h3>
+            <p class="text-primary-dark mb-4">
+                If photos are not displaying, try these solutions:
+            </p>
+            <div class="space-y-3 text-sm">
+                <div class="flex items-start">
+                    <div class="w-6 h-6 bg-primary-medium text-primary-dark rounded-full flex items-center justify-center mr-2 mt-1">1</div>
+                    <div>
+                        <p class="font-semibold text-primary-dark">Check file paths</p>
+                        <p class="text-primary-dark">Ensure files exist at: E:\Ojt\assets\img\gallery\</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <div class="w-6 h-6 bg-primary-medium text-primary-dark rounded-full flex items-center justify-center mr-2 mt-1">2</div>
+                    <div>
+                        <p class="font-semibold text-primary-dark">URL Encoding</p>
+                        <p class="text-primary-dark">Spaces in file names are converted to %20</p>
+                        <code class="text-xs bg-primary-medium p-1 rounded text-primary-dark">1 (1).webp → 1%20(1).webp</code>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <div class="w-6 h-6 bg-primary-medium text-primary-dark rounded-full flex items-center justify-center mr-2 mt-1">3</div>
+                    <div>
+                        <p class="font-semibold text-primary-dark">Alternative Solution</p>
+                        <p class="text-primary-dark">Rename files without spaces:</p>
+                        <code class="text-xs bg-primary-medium p-1 rounded text-primary-dark">1(1).webp, 1(2).webp, etc.</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Simple Footer -->
+<footer class="bg-primary-dark text-white py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Logo Row -->
+        <div class="flex flex-col items-center space-y-8 mb-6">
+            <div class="flex flex-col items-center">
+                <img src="https://depedsorsogon.com.ph/images/logo.png"
+                     alt="DepEd Sorsogon Logo"
+                     class="h-20 md:h-24 object-contain mb-2">
+                <p class="text-sm text-primary-medium">DepEd Sorsogon</p>
+            </div>
+            
+            <div class="flex flex-col items-center">
+                <img src="https://srv1.thelewiscollege.edu.ph/mytlc/assets/images/ccs_logo.png"
+                     alt="The Lewis College CCS Logo"
+                     class="h-20 md:h-24 object-contain mb-2">
+                <p class="text-sm text-primary-medium">College of Computer Studies</p>
+            </div>
+            
+            <div class="flex flex-col items-center">
+                <img src="https://srv1.thelewiscollege.edu.ph/mytlc/assets/images/tlc_logo.png"
+                     alt="The Lewis College Logo"
+                     class="h-20 md:h-24 object-contain mb-2">
+                <p class="text-sm text-primary-medium">The Lewis College</p>
+            </div>
+        </div>
+        
+        <!-- Text Info -->
+        <div class="text-center">
+            <p class="text-primary-medium mb-2">Kerbi Vincent D. Eugerio • BSIT-4 Student</p>
+            <p class="text-primary-medium text-sm">OJT at DepEd Sorsogon City Division • The Lewis College - CCS</p>
+            <p class="text-primary-medium text-sm mt-4">&copy; 2024 OJT Blog. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+      // Handle image errors
+document.querySelectorAll('img').forEach(img => {
+    img.onerror = function() {
+        console.log('Image failed to load:', this.src);
+        
+        // Try alternative paths
+        const originalSrc = this.src;
+        
+        // Try with spaces
+        const withSpaces = originalSrc.replace(/%20/g, ' ');
+        
+        // Try with underscores
+        const withUnderscores = originalSrc.replace(/%20/g, '_');
+        
+        // Try without parentheses
+        const noParentheses = originalSrc.replace(/%20\(/g, '(').replace(/\)/g, '');
+        
+        if (originalSrc !== withSpaces) {
+            this.src = withSpaces;
+            return;
+        }
+        
+        // If still fails, show placeholder
+        this.parentElement.innerHTML = `
+            <div class="photo-placeholder h-full">
+                <div class="text-center p-4">
+                    <i class="fas fa-image text-3xl mb-2"></i>
+                    <p>Photo not found</p>
+                    <p class="text-xs mt-1">${this.alt}</p>
+                    <p class="text-xs text-red-500">Path: ${originalSrc}</p>
+                </div>
+            </div>
+        `;
+    };
+});
+    </script>
+</body>
+</html>
